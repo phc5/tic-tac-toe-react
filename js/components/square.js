@@ -3,7 +3,7 @@ var ReactDOM = require('react-dom');
 
 var Square = function(props) {
     return (
-        <div id={props.squareID} className={props.classNames} onClick={props.onclick}></div>
+        <div id={props.squareID} className={props.classNames + " " + props.onWin} onClick={props.onclick}>{props.text}</div>
     );
 };
 
