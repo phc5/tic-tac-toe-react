@@ -9,12 +9,17 @@ var Board = React.createClass({
             square: ["","","","","","","","",""],
             onWin: ["","","","","","","","",""],
             count: 0,
-            winCond: [[0,1,2], [0,4,8], [0,3,6], [1,4,7], [2,4,6], [2,5,8], [3,4,5], [6,7,8]]
+            winCond: [[0,1,2], [0,4,8], [0,3,6], [1,4,7], [2,4,6], [2,5,8], [3,4,5], [6,7,8]],
+            gameOver: false
         };
     },
     handleClick: function(event) {
+        if (this.state.gameOver) {
+            ReactDOM.render(<div>You idiot, the game is over!</div>, document.getElementById('result'));
+            return;
+        }
         if (this.state.square[event.target.id] !== "") {
-            console.log("in if");
+            //do nothing
         } else if (this.state.count % 2 === 0) {
             var squareArray = this.state.square;
             squareArray[event.target.id] = "X";
@@ -42,9 +47,16 @@ var Board = React.createClass({
     gameOver: function() {
         for (let i=0; i < this.state.winCond.length; i++) {
             if (this.state.count === 8) {
+                this.state.gameOver = true;
                 ReactDOM.render(<div>Draw!</div>, document.getElementById('result'));
             }
             if(this.checkWin(this.state.winCond[i])) {
+                this.state.gameOver = true;
+                if (this.state.playerXO === "X") {
+                    this.props.winCount("X");  
+                } else {
+                    this.props.winCount("O");
+                }
                 var tempArray = this.state.onWin;
                 tempArray[this.state.winCond[i][0]] = "highlight";
                 tempArray[this.state.winCond[i][1]] = "highlight";
@@ -55,16 +67,17 @@ var Board = React.createClass({
                 ReactDOM.render(<div>Game Over! Player: {this.state.playerXO} wins!</div>, document.getElementById('result'));
             }
         }
+
     },
     resetGame: function() {
         this.setState({
             playerXO: "X",
             square: ["","","","","","","","",""],
             onWin: ["","","","","","","","",""],
-            count: 0
+            count: 0,
+            gameOver: false
         });
         ReactDOM.render(<div></div>, document.getElementById('result'));
-        console.log(this.state);
     },
     render: function() {
         var squares = [];
@@ -84,7 +97,8 @@ var Board = React.createClass({
                 <h1>{this.props.title}</h1>
                 <h3 id="result"></h3>
                 <div className="board">{squares}</div>
-                <button onClick={this.resetGame}>PLAY AGAIN</button>
+                <button onClick={this.resetGame}>Play Again</button>
+                <button onClick={this.props.deleteBoard}>Delete Board</button>
             </div>
         );
     }   
