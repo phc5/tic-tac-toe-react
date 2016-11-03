@@ -1,8 +1,8 @@
 require('babel-polyfill');
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Board = require('./components/board');
+var BoardContainer = require('./components/board-container');
 
 document.addEventListener('DOMContentLoaded', function() {
-    ReactDOM.render(<Board title="Tic-Tac-Toe" />, document.getElementById('app'));
+    ReactDOM.render(<BoardContainer />, document.getElementById('app'));
 });
