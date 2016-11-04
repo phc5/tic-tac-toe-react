@@ -11,6 +11,9 @@ var BoardContainer = React.createClass({
     		o: 0
     	};
     },
+    componentDidMount: function() {
+        console.log("Mounted");
+    },
     createBoard: function() {
     	this.setState({
     		boards: this.state.boards.concat(this.state.count),
