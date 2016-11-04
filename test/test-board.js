@@ -4,7 +4,7 @@ var should = require('chai').should();
 
 var Board = require('../js/components/board.js');
 
-describe.only('Board component', function() {
+describe('Board component', function() {
     var renderer, result, board;
     beforeEach(function() {
 

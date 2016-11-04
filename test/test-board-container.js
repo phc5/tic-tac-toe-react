@@ -2,33 +2,37 @@ var React = require('react');
 var TestUtils = require('react-addons-test-utils');
 var should = require('chai').should();
 
-var Board = require('../js/components/board.js');
+var BoardContainer = require('../js/components/board-container.js');
 
-describe.only('Board component', function() {
-    var renderer, result, board;
+describe.only('Board-container component', function() {
+    var renderer, result, boardC;
     beforeEach(function() {
 
         renderer = TestUtils.createRenderer();
-        renderer.render(<Board title="Tic-Tac-Toe 1" deleteBoard="deleteBoard callback" winCount='0' key='1'/>);
+        renderer.render(<BoardContainer />);
         result = renderer.getRenderOutput();
-        board = result;
+        boardC = result;
     });
 
 
-    it('Renders the board of type div',  function() {
-        board.type.should.equal('div');
+    it('Renders the container of type div with 4 children',  function() {
+        boardC.type.should.equal('div');
+        boardC.props.children.length.should.equal(4);
     });
 
-    it('Renders the square with title "Tic-Tac-Toe " + 1',  function() {
-        board.props.children[0].props.children.should.equal("Tic-Tac-Toe 1");
+    it('Renders the first two children of container with id = X and O',  function() {
+        boardC.props.children[0].props.id.should.equal("X");
+        boardC.props.children[1].props.id.should.equal("O");
+        boardC.props.children[0].type.should.equal('h1');
+        boardC.props.children[1].type.should.equal('h1');
     });
 
-    it('Renders the square with button calling deleteBoard callback',  function() {
-        board.props.children[4].props.onClick.should.equal("deleteBoard callback");
+    it('Renders the Create Tic-Tac_Toe Board button with onClick linking to the createBoard function',  function() {
+        boardC.props.children[2].props.children.should.be.equal('Create Tic-Tac-Toe Board');
+        boardC.props.children[2].props.onClick.should.be.a('function');
+        boardC.props.children[2].type.should.equal('button');
     });
-
-    it('Renders the square with button calling deleteBoard callback',  function() {
-        console.log("board: ", board.props.children[2].props.children);
-        board.props.children[2].props.children.length.should.equal(9);
+    it('Renders no boards intially',  function() {
+        boardC.props.children[3].length.should.equal(0);
     });
 });
