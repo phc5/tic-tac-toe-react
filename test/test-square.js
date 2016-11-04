@@ -4,27 +4,26 @@ var should = require('chai').should();
 
 var Square = require('../js/components/square');
 describe('Square component', function() {
-    var square, onWin, classNames, onClick, squareID, renderer, result, squareResult;
+    var renderer, result, square;
     beforeEach(function() {
-        square = [""];
-        onWin = [""];
-        classNames = "rborder bborder";
-        onClick = "handleClick callback goes here";
-        squareID = [1];
-
         renderer = TestUtils.createRenderer();
-        renderer.render(<Square text= {square} onWin= {onWin} squareID= {squareID} classNames= {classNames} onclick= {onClick} />);
+        renderer.render(<Square text= {[""]} onWin= {[""]} squareID= '1' classNames= "rborder bborder" onclick= "handleClick callback goes here" />);
         result = renderer.getRenderOutput();
-        squareResult = result;
+        square = result;
     });
 
 
     it('Renders the square of type div',  function() {
-        squareResult.type.should.equal('div');
+        square.type.should.equal('div');
     });
 
     it('Renders the square with classNames "rborder bborder"',  function() {
-        console.log("squareResult.props ",squareResult.props);
-        squareResult.props.className.should.equal("rborder bborder ");
+        console.log("square ",square);
+        square.props.className.should.equal("rborder bborder ");
+    });
+
+    it('Renders the square with handleClick callback and correct squareID',  function() {
+        square.props.onClick.should.equal('handleClick callback goes here');
+        square.props.id.should.equal('1');
     });
 });

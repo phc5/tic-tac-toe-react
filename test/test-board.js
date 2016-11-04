@@ -28,7 +28,6 @@ describe('Board component', function() {
     });
 
     it('Renders the square with button calling deleteBoard callback',  function() {
-        console.log("board: ", board.props.children[2].props.children);
         board.props.children[2].props.children.length.should.equal(9);
     });
 });
